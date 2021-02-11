@@ -149,10 +149,10 @@ public class ProductsMigration {
                     else
                         System.out.println("*********************************Duplicate Product found \n product id is : "+ duplicateProducts.getId()+" and Store id is:  "+duplicateProducts.getStoreid());
 
-                    if (productsList.size() == 50){
+                    if (productsList.size() == 500){
                         saveMigratedData(mappingStoreId.get());
                         productService.saveAll(productsList);
-                        System.out.println("Saved Products : "+productIdList.size());
+                        System.out.println("Saved Products : "+productsList.size());
                         productsList.clear();
                         bool.set(true);
                     }
@@ -166,7 +166,7 @@ public class ProductsMigration {
         if (productsList.size()>0){
             saveMigratedData(mappingStoreId.get());
             productService.saveAll(productsList);
-            System.out.println("Saved Products : "+productIdList.size());
+            System.out.println("Saved Products : "+productsList.size());
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~Completed Moving Products for Store id " +productsList.get(0).getStoreid()+"~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             productsList.clear();
             bool.set(true);
