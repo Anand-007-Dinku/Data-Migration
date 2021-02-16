@@ -1,14 +1,13 @@
 package com.cloudtech.snapbizz.snaporder.datamigration.controller;
 
+import com.cloudtech.snapbizz.snaporder.datamigration.Utils.MigrationUtil;
 import com.cloudtech.snapbizz.snaporder.datamigration.migration.ProductsMigration;
 import com.cloudtech.snapbizz.snaporder.datamigration.migration.StoresMigration;
 import com.cloudtech.snapbizz.snaporder.datamigration.postgresql.model.MappingStoreId;
 import com.cloudtech.snapbizz.snaporder.datamigration.postgresql.repository.MappingStoreIdRepository;
+import com.cloudtech.snapbizz.snaporder.datamigration.postgresql.repository.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -31,6 +30,13 @@ public class ProductMigrationController {
     @Autowired
     MappingStoreIdRepository mappingStoreIdRepository;
 
+    @Autowired
+    MigrationUtil migrationUtil;
+
+    @Autowired
+    ProductsRepository productsRepository;
+
+
  /*  @PostMapping("/stores")
     public Boolean migrateStores(){
         Boolean bool = false;
@@ -43,8 +49,8 @@ public class ProductMigrationController {
 
         Boolean bool = false;
 
-        Boolean isValidStore = productsMigration.checkStoreIdAvailable(storeId);
-        Boolean isAlreadyMigrated =productsMigration.checkAlreadyMigrated(storeId);
+        Boolean isValidStore = migrationUtil.checkStoreIdAvailable(storeId);
+        Boolean isAlreadyMigrated =migrationUtil.checkAlreadyMigrated(storeId);
 
         if (isValidStore){
             if (isAlreadyMigrated){
@@ -68,8 +74,8 @@ public class ProductMigrationController {
 
         mappingStoreIdList.stream().forEach(mappingStoreId -> {
 
-            Boolean isValidStore = productsMigration.checkStoreIdAvailable(mappingStoreId.getOldStoreId());
-            Boolean isAlreadyMigrated =productsMigration.checkAlreadyMigrated(mappingStoreId.getOldStoreId());
+            Boolean isValidStore = migrationUtil.checkStoreIdAvailable(mappingStoreId.getOldStoreId());
+            Boolean isAlreadyMigrated =migrationUtil.checkAlreadyMigrated(mappingStoreId.getOldStoreId());
 
             if (isValidStore){
                 if (isAlreadyMigrated){
@@ -86,13 +92,12 @@ public class ProductMigrationController {
         });
         return bool.get();
     }
+/*
+     @GetMapping("/1")
+    public String getTsv(String name){
+        return productsRepository.getTsv("Rajmah 1kg");
+    }
 
-    /* @PostMapping("/products-data")
-    public Boolean migrateProducts() {
-       Boolean bool = false;
-       bool = migrateDataService.migrateProducts();
-
-       return bool;
-   }*/
+    */
 
 }

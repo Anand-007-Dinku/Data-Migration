@@ -14,5 +14,5 @@ import java.util.Optional;
 @Repository
 public interface StoreMapRepository extends JpaRepository<SBSOStoreMap, Integer> {
 
-    public Optional<SBSOStoreMap> findBySostoreid(Long id);
+    public Optional<SBSOStoreMap> findBySostoreId(Long id);
 }

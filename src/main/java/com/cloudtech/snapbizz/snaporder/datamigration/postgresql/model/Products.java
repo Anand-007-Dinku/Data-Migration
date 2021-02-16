@@ -26,7 +26,7 @@ public class Products {
     private String description;
 
     @Column(name = "img_url")
-    private String img_url;
+    private String imgUrl;
 
     @Column(name = "unit")
     private String unit;
@@ -35,34 +35,34 @@ public class Products {
     private Double mrp;
 
     @Column(name = "sell_price")
-    private Double sell_price;
+    private Double sellPrice;
 
     @Column(name = "article_id")
-    private String article_id;
+    private String articleId;
 
     @Column(name = "is_deleted")
-    private Boolean is_deleted = false;
+    private Boolean isDeleted = false;
 
     @Column(name = "is_gdb")
-    private Boolean is_gdb;
+    private Boolean isGdb;
 
     @Column(name = "tsv")
     private String tsv;
 
     @Column(name = "created_at")
-    private Timestamp created_at;
+    private Timestamp createdAt;
 
     @Column(name = "updated_at")
-    private Timestamp updated_at;
+    private Timestamp updatedAt;
 
     @Column(name = "store_id")
     private Long storeid;
 
     @Column(name = "subcategory_id")
-    private Integer subcategory_id;
+    private Integer subcategoryId;
 
     @Column(name = "is_active")
-    private Boolean is_active = true;
+    private Boolean isActive = true;
 
     public Products() {
     }
@@ -99,12 +99,12 @@ public class Products {
         this.description = description;
     }
 
-    public String getImg_url() {
-        return img_url;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setImg_url(String img_url) {
-        this.img_url = img_url;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public String getUnit() {
@@ -123,36 +123,36 @@ public class Products {
         this.mrp = mrp;
     }
 
-    public Double getSell_price() {
-        return sell_price;
+    public Double getSellPrice() {
+        return sellPrice;
     }
 
-    public void setSell_price(Double sell_price) {
-        this.sell_price = sell_price;
+    public void setSellPrice(Double sellPrice) {
+        this.sellPrice = sellPrice;
     }
 
-    public String getArticle_id() {
-        return article_id;
+    public String getArticleId() {
+        return articleId;
     }
 
-    public void setArticle_id(String article_id) {
-        this.article_id = article_id;
+    public void setArticleId(String articleId) {
+        this.articleId = articleId;
     }
 
-    public Boolean getIs_deleted() {
-        return is_deleted;
+    public Boolean getDeleted() {
+        return isDeleted;
     }
 
-    public void setIs_deleted(Boolean is_deleted) {
-        this.is_deleted = is_deleted;
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 
-    public Boolean getIs_gdb() {
-        return is_gdb;
+    public Boolean getGdb() {
+        return isGdb;
     }
 
-    public void setIs_gdb(Boolean is_gdb) {
-        this.is_gdb = is_gdb;
+    public void setGdb(Boolean gdb) {
+        isGdb = gdb;
     }
 
     public String getTsv() {
@@ -163,20 +163,20 @@ public class Products {
         this.tsv = tsv;
     }
 
-    public Timestamp getCreated_at() {
-        return created_at;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(Timestamp created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Timestamp getUpdated_at() {
-        return updated_at;
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_at(Timestamp updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public Long getStoreid() {
@@ -187,19 +187,45 @@ public class Products {
         this.storeid = storeid;
     }
 
-    public Integer getSubcategory_id() {
-        return subcategory_id;
+    public Integer getSubcategoryId() {
+        return subcategoryId;
     }
 
-    public void setSubcategory_id(Integer subcategory_id) {
-        this.subcategory_id = subcategory_id;
+    public void setSubcategoryId(Integer subcategoryId) {
+        this.subcategoryId = subcategoryId;
     }
 
-    public Boolean getIs_active() {
-        return is_active;
+    public Boolean getActive() {
+        return isActive;
     }
 
-    public void setIs_active(Boolean is_active) {
-        this.is_active = is_active;
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 }
+
+//POSTGRESQL products table DDL
+/*
+CREATE TABLE public.products (
+id serial NOT NULL,
+barcode text NULL,
+title text NULL,
+description text NULL,
+img_url text NULL,
+unit text NULL,
+mrp numeric NULL,
+sell_price numeric NULL,
+article_id text NULL,
+is_deleted bool NULL DEFAULT false,
+is_gdb bool NULL,
+tsv text NULL,
+created_at date NULL DEFAULT now(),
+updated_at date NULL DEFAULT now(),
+store_id int4 NULL,
+subcategory_id int4 NULL,
+is_active bool NULL DEFAULT true,
+CONSTRAINT products_pkey PRIMARY KEY (id),
+CONSTRAINT products_store_id_fkey FOREIGN KEY (store_id) REFERENCES stores(id) ON UPDATE CASCADE ON DELETE SET NULL,
+CONSTRAINT products_subcategory_id_fkey FOREIGN KEY (subcategory_id) REFERENCES categories(id) ON UPDATE CASCADE ON DELETE SET NULL
+);
+*/

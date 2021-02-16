@@ -15,77 +15,96 @@ public class Stores {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    private Long store_id;
+    private Long storeId;
 
-    private Integer sb_id;
+    @Column(name = "sb_id")
+    private Integer sbId;
 
-    private Integer metro_dc_id;
+    @Column(name = "metro_dc_id")
+    private Integer metroDcId;
 
+    @Column(name = "phone")
     private String phone;
 
+    @Column(name = "pwd")
     private String pwd;
 
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "street")
     private String street;
 
+    @Column(name = "city")
     private String city;
 
+    @Column(name = "state")
     private String state;
 
+    @Column(name = "country")
     private String country;
 
+    @Column(name = "pin")
     private String pin;
 
+    @Column(name = "latitude")
     private String latitude;
 
+    @Column(name = "longitude")
     private String longitude;
 
-    private String service_area;
+    @Column(name = "service_area")
+    private String serviceArea;
 
-    private Timestamp subscription_expiry_date;
+    @Column(name = "subscription_expiry_date")
+    private Timestamp subscriptionExpiryDate;
 
-    private String min_order_value;
+    @Column(name = "min_order_value")
+    private String minOrderValue;
 
-    private String owner_name;
+    @Column(name = "owner_name")
+    private String ownerName;
 
-    private String working_day;
+    @Column(name = "working_day")
+    private String workingDay;
 
-    private String working_timing;
+    @Column(name = "working_timing")
+    private String workingTiming;
 
     @Column(name = "created_at")
-    private Timestamp created_at;
+    private Timestamp createdAt;
 
     @Column(name = "updated_at")
-    private Timestamp updated_at;
+    private Timestamp updatedAt;
 
-    private String payment_modes;
+    @Column(name = "payment_modes")
+    private String paymentModes;
 
     public Stores() {
     }
 
-    public Long getStore_id() {
-        return store_id;
+    public Long getStoreId() {
+        return storeId;
     }
 
-    public void setStore_id(Long store_id) {
-        this.store_id = store_id;
+    public void setStoreId(Long storeId) {
+        this.storeId = storeId;
     }
 
-    public Integer getSb_id() {
-        return sb_id;
+    public Integer getSbId() {
+        return sbId;
     }
 
-    public void setSb_id(Integer sb_id) {
-        this.sb_id = sb_id;
+    public void setSbId(Integer sbId) {
+        this.sbId = sbId;
     }
 
-    public Integer getMetro_dc_id() {
-        return metro_dc_id;
+    public Integer getMetroDcId() {
+        return metroDcId;
     }
 
-    public void setMetro_dc_id(Integer metro_dc_id) {
-        this.metro_dc_id = metro_dc_id;
+    public void setMetroDcId(Integer metroDcId) {
+        this.metroDcId = metroDcId;
     }
 
     public String getPhone() {
@@ -168,75 +187,104 @@ public class Stores {
         this.longitude = longitude;
     }
 
-    public String getService_area() {
-        return service_area;
+    public String getServiceArea() {
+        return serviceArea;
     }
 
-    public void setService_area(String service_area) {
-        this.service_area = service_area;
+    public void setServiceArea(String serviceArea) {
+        this.serviceArea = serviceArea;
     }
 
-    public Timestamp getSubscription_expiry_date() {
-        return subscription_expiry_date;
+    public Timestamp getSubscriptionExpiryDate() {
+        return subscriptionExpiryDate;
     }
 
-    public void setSubscription_expiry_date(Timestamp subscription_expiry_date) {
-        this.subscription_expiry_date = subscription_expiry_date;
+    public void setSubscriptionExpiryDate(Timestamp subscriptionExpiryDate) {
+        this.subscriptionExpiryDate = subscriptionExpiryDate;
     }
 
-    public String getMin_order_value() {
-        return min_order_value;
+    public String getMinOrderValue() {
+        return minOrderValue;
     }
 
-    public void setMin_order_value(String min_order_value) {
-        this.min_order_value = min_order_value;
+    public void setMinOrderValue(String minOrderValue) {
+        this.minOrderValue = minOrderValue;
     }
 
-    public String getOwner_name() {
-        return owner_name;
+    public String getOwnerName() {
+        return ownerName;
     }
 
-    public void setOwner_name(String owner_name) {
-        this.owner_name = owner_name;
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 
-    public String getWorking_day() {
-        return working_day;
+    public String getWorkingDay() {
+        return workingDay;
     }
 
-    public void setWorking_day(String working_day) {
-        this.working_day = working_day;
+    public void setWorkingDay(String workingDay) {
+        this.workingDay = workingDay;
     }
 
-    public String getWorking_timing() {
-        return working_timing;
+    public String getWorkingTiming() {
+        return workingTiming;
     }
 
-    public void setWorking_timing(String working_timing) {
-        this.working_timing = working_timing;
+    public void setWorkingTiming(String workingTiming) {
+        this.workingTiming = workingTiming;
     }
 
-    public String getPayment_modes() {
-        return payment_modes;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
-    public void setPayment_modes(String payment_modes) {
-        this.payment_modes = payment_modes;
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Date getCreated_at() {
-        return created_at;
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setCreated_at(Timestamp created_at) {
-        this.created_at = created_at;
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
-    public Date getUpdated_at() {
-        return updated_at;
+    public String getPaymentModes() {
+        return paymentModes;
     }
 
-    public void setUpdated_at(Timestamp updated_at) {
-        this.updated_at = updated_at;
+    public void setPaymentModes(String paymentModes) {
+        this.paymentModes = paymentModes;
     }
 }
+
+//POSTGRESQL stores table DDL
+/*CREATE TABLE public.stores (
+id serial NOT NULL,
+sb_id int4 NOT NULL,
+metro_dc_id int4 NULL,
+phone varchar(255) NULL,
+pwd varchar(255) NULL,
+name varchar(255) NULL,
+street varchar(255) NULL,
+city varchar(255) NULL,
+state varchar(255) NULL,
+country varchar(255) NULL,
+pin varchar(255) NULL,
+latitude varchar(255) NULL DEFAULT '0.0'::character varying,
+longitude varchar(255) NULL DEFAULT '0.0'::character varying,
+service_area varchar(255) NULL,
+subscription_expiry_date varchar(255) NULL,
+min_order_value varchar(255) NOT NULL,
+owner_name varchar(255) NULL,
+working_day text NULL,
+working_timing varchar(255) NULL,
+created_at timestamptz NULL DEFAULT now(),
+updated_at timestamptz NULL DEFAULT now(),
+payment_modes varchar NOT NULL DEFAULT 'Cash'::character varying,
+CONSTRAINT stores_phone_key UNIQUE (phone),
+CONSTRAINT stores_pkey PRIMARY KEY (id),
+CONSTRAINT stores_sb_id_key UNIQUE (sb_id)
+);*/

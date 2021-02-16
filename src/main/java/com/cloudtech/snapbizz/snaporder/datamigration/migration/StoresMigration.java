@@ -30,9 +30,6 @@ public class StoresMigration {
     @Autowired
     private MappingStoreIdService mappingStoreIdService;
 
-    @Autowired
-    private MysqlProductsService mysqlProductsService;
-
     public Boolean migrateData() {
 
         Boolean bool = false;
@@ -41,64 +38,68 @@ public class StoresMigration {
 
         for (RegisteredStores registeredStore : allRegisteredStores) {
 
-            Stores stores = new Stores();
+            if (null != registeredStore){
 
-            SBSOStoreMap storeMap = storeMapService.getBySostoreid(registeredStore.getStoreId());
+                Stores stores = new Stores();
 
-            stores.setSb_id(storeMap.getSb_storeid());
+                SBSOStoreMap storeMap = storeMapService.getBySostoreid(registeredStore.getStoreId());
 
-            stores.setMetro_dc_id(storeMap.getMetro_dcid());
+                if (null != storeMap){
+                    stores.setSbId(storeMap.getSbStoreid());
 
-            stores.setPhone(registeredStore.getMobile_number());
+                    stores.setMetroDcId(storeMap.getMetroDcId());
+                }
 
-            stores.setPwd(registeredStore.getPassword());
+                stores.setPhone(registeredStore.getMobileNumber());
 
-            stores.setName(registeredStore.getSTORENAME());
+                stores.setPwd(registeredStore.getPassword());
 
-            stores.setStreet(registeredStore.getStreet());
+                stores.setName(registeredStore.getStoreName());
 
-            stores.setCity(registeredStore.getCITY());
+                stores.setStreet(registeredStore.getStreet());
 
-            stores.setState(registeredStore.getSTATE());
+                stores.setCity(registeredStore.getCity());
 
-            stores.setCountry(registeredStore.getCOUNTRY());
+                stores.setState(registeredStore.getState());
 
-            stores.setPin(registeredStore.getZIPCODE());
+                stores.setCountry(registeredStore.getCountry());
 
-            stores.setLatitude(registeredStore.getLAT());
+                stores.setPin(registeredStore.getZipcode());
 
-            stores.setLongitude(registeredStore.getLANG());
+                stores.setLatitude(registeredStore.getLatitude());
 
-            stores.setService_area(registeredStore.getService_area());
+                stores.setLongitude(registeredStore.getLongitude());
 
-            stores.setSubscription_expiry_date(registeredStore.getExpired_on());
+                stores.setServiceArea(registeredStore.getServiceArea());
 
-            stores.setMin_order_value(Integer.toString((int) registeredStore.getMin_order_value()));
+                stores.setSubscriptionExpiryDate(registeredStore.getExpiredOn());
 
-            stores.setOwner_name(registeredStore.getProprietor_name());
+                stores.setMinOrderValue(Integer.toString((int) registeredStore.getMinOrderValue()));
 
-            stores.setWorking_day(registeredStore.getWorking_days());
+                stores.setOwnerName(registeredStore.getProprietorName());
 
-            stores.setWorking_timing(registeredStore.getWork_timings());
+                stores.setWorkingDay(registeredStore.getWorkingDays());
 
-            stores.setPayment_modes("Cash,Card");
+                stores.setWorkingTiming(registeredStore.getWorkTimings());
 
-            stores.setCreated_at(registeredStore.getCreated_date());
+                stores.setPaymentModes("Cash,Card");
 
-            stores.setUpdated_at(registeredStore.getModified_date());
+                stores.setCreatedAt(registeredStore.getCreatedDate());
 
-            storeService.save(stores);
+                stores.setUpdatedAt(registeredStore.getModifiedDate());
 
-            /*Here We are generating new storeId's while creating stores,
-             * and storing the old storeId's in the MappingStoreId table.
-             */
-            MappingStoreId mappingStoreId = new MappingStoreId();
-            mappingStoreId.setOldStoreId(registeredStore.getStoreId());
-            mappingStoreId.setNewStoreId(stores.getStore_id());
-            mappingStoreIdService.save(mappingStoreId);
+                storeService.save(stores);
 
-            bool = true;
+                /*Here We are generating new storeId's while creating stores,
+                 * and storing the old storeId's in the MappingStoreId table.
+                 */
+                MappingStoreId mappingStoreId = new MappingStoreId();
+                mappingStoreId.setOldStoreId(registeredStore.getStoreId());
+                mappingStoreId.setNewStoreId(stores.getStoreId());
+                mappingStoreIdService.save(mappingStoreId);
 
+                bool = true;
+            }
         }
         return bool;
     }

@@ -1,16 +1,15 @@
 package com.cloudtech.snapbizz.snaporder.datamigration.migration;
 
+import com.cloudtech.snapbizz.snaporder.datamigration.Utils.MigrationUtil;
 import com.cloudtech.snapbizz.snaporder.datamigration.mysql.model.MysqlProductStores;
 import com.cloudtech.snapbizz.snaporder.datamigration.mysql.model.MysqlProducts;
-import com.cloudtech.snapbizz.snaporder.datamigration.mysql.model.RegisteredStores;
 import com.cloudtech.snapbizz.snaporder.datamigration.postgresql.model.MappingStoreId;
 import com.cloudtech.snapbizz.snaporder.datamigration.postgresql.model.Products;
 import com.cloudtech.snapbizz.snaporder.datamigration.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -38,35 +37,7 @@ public class ProductsMigration {
     private MysqlProductsService mysqlProductsService;
 
     @Autowired
-    private RegisteredStoreService registeredStoreService;
-
-    public Boolean checkStoreIdAvailable(Long storeId){
-
-        Boolean bool = false;
-
-        RegisteredStores registeredStores = registeredStoreService.getRegisteredStoresById(storeId);
-
-        if (null != registeredStores){
-            bool = true;
-        } else {
-            System.out.println("Store Not listed into Registered Store table : ");
-        }
-
-        return bool;
-    }
-
-    public Boolean checkAlreadyMigrated(Long storeId) {
-        Boolean bool = false;
-
-       MappingStoreId mappingStoreId =  mappingStoreIdService.findByOldStoreId(storeId);
-       if (mappingStoreId.getMigrated()==Boolean.FALSE){
-           bool = true;
-       } else {
-           System.out.println("Products Belongs to this StoreId already Migrated");
-       }
-
-        return bool;
-    }
+    private MigrationUtil migrationUtil;
 
     public Boolean migrateProductsByStoreId(Long storeId) {
         AtomicReference<Boolean> bool = new AtomicReference<>(false);
@@ -86,52 +57,53 @@ public class ProductsMigration {
             if (null != mysqlProducts){
                 Products products = new Products();
 
-                if (null != mysqlProducts.getBARCODE())
-                    products.setBarcode(mysqlProducts.getBARCODE());
+                if (null != mysqlProducts.getBarcode())
+                    products.setBarcode(mysqlProducts.getBarcode());
 
-                if (null != mysqlProducts.getPRODUCTNAME())
-                    products.setTitle(mysqlProducts.getPRODUCTNAME());
+                if (null != mysqlProducts.getProductName()) {
+                    products.setTitle(mysqlProducts.getProductName());
+                    products.setTsv(migrationUtil.toTsVector(mysqlProducts.getProductName()));
+                }
 
-                if (null != mysqlProducts.getPRODUCTDESCRIPTION())
-                    products.setDescription(mysqlProducts.getPRODUCTDESCRIPTION());
+                if (null != mysqlProducts.getProductDescription())
+                    products.setDescription(mysqlProducts.getProductDescription());
 
                 if (null != mysqlProducts.getImageUrl())
-                    products.setImg_url(mysqlProducts.getImageUrl());
+                    products.setImgUrl(mysqlProducts.getImageUrl());
 
-                if (null != mysqlProducts.getCreated_date())
-                    products.setCreated_at(mysqlProducts.getCreated_date());
+                if (null != mysqlProducts.getCreatedDate())
+                    products.setCreatedAt(mysqlProducts.getCreatedDate());
 
-                if (null != mysqlProducts.getModifeid_date())
-                    products.setUpdated_at(mysqlProducts.getModifeid_date());
+                if (null != mysqlProducts.getModifeidDate())
+                    products.setUpdatedAt(mysqlProducts.getModifeidDate());
 
-//          products.setTsv(oldPd.get);
-                products.setArticle_id("0");
-                products.setIs_deleted(Boolean.FALSE);
-                products.setIs_gdb(Boolean.FALSE);
-                products.setSubcategory_id(0);
-                products.setIs_active(Boolean.TRUE);
+                products.setArticleId("0");
+                products.setDeleted(Boolean.FALSE);
+                products.setGdb(Boolean.FALSE);
+                products.setSubcategoryId(0);
+                products.setActive(Boolean.TRUE);
 
 
                 Long oldProductId = mysqlProducts.getProductId();
 
                 List<MysqlProductStores> mysqlProductStores = mysqlProductStoresService.findByProductId(oldProductId).stream()
-                        .filter(stores -> stores.getPRODUCTUNIT() != "1 GM" || stores.getPRODUCTUNIT() != "1 ML"
-                                || stores.getPRODUCTUNIT() != "GM" || stores.getPRODUCTUNIT() != "ML").collect(Collectors.toList());
+                        .filter(stores -> stores.getProductUnit() != "1 GM" || stores.getProductUnit() != "1 ML"
+                                || stores.getProductUnit() != "GM" || stores.getProductUnit() != "ML").collect(Collectors.toList());
 
                 if (null != mysqlProductStores && mysqlProductStores.size() == 1) {
 
 
-                    if (null != mysqlProductStores.get(0).getPRODUCTUNIT())
-                        products.setUnit(mysqlProductStores.get(0).getPRODUCTUNIT());
+                    if (null != mysqlProductStores.get(0).getProductUnit())
+                        products.setUnit(mysqlProductStores.get(0).getProductUnit());
 
-                    if (null != mysqlProductStores.get(0).getStore_mrp_price())
-                        products.setMrp(mysqlProductStores.get(0).getStore_mrp_price());
+                    if (null != mysqlProductStores.get(0).getStoreMrpPrice())
+                        products.setMrp(mysqlProductStores.get(0).getStoreMrpPrice());
 
                     if (null != mysqlProductStores.get(0).getPrice())
-                        products.setSell_price(mysqlProductStores.get(0).getPrice());
+                        products.setSellPrice(mysqlProductStores.get(0).getPrice());
 
 
-                    /*Here We are generating new storeId's while creating stores,
+                    /* Here We are generating new storeId's while creating stores,
                      * and storing the old storeId's in the MappingStoreId table.
                      *
                      * Hence we are sending old StoreId's from the mysqlProductStores to
@@ -180,98 +152,4 @@ public class ProductsMigration {
         mappingStoreId.setMigrated(Boolean.TRUE);
         return mappingStoreIdService.save(mappingStoreId);
     }
-
-
- /*   @Override
-    public List<Employee> findByName(String name, int offset, int limit) {
-        // limit != 0 ;)
-        int page = offset / limit;
-        return repository.findByName(name, new PageRequest(page, limit));
-    }*/
-
-
-  /*
-        @PersistenceContext
-    private EntityManager entityManager;
-
-    @Override
-    @Transactional(readOnly = true)
-    public Boolean migrateProducts() {
-
-        Boolean bool = false;
-
-        LinkedList<Products> productsList = new LinkedList<>();
-
-        List<MysqlProducts> productsStream = mysqlProductsService.findAll();
-
-        productsStream.forEach(oldPd -> {
-
-            Products products = new Products();
-
-            if (null != oldPd.getBARCODE())
-                products.setBarcode(oldPd.getBARCODE());
-
-            if (null != oldPd.getPRODUCTNAME())
-                products.setTitle(oldPd.getPRODUCTNAME());
-
-            if (null != oldPd.getPRODUCTDESCRIPTION())
-                products.setDescription(oldPd.getPRODUCTDESCRIPTION());
-
-            if (null != oldPd.getImageUrl())
-                products.setImg_url(oldPd.getImageUrl());
-
-            if (null != oldPd.getCreated_date())
-                products.setCreated_at(oldPd.getCreated_date());
-
-            if (null != oldPd.getModifeid_date())
-                products.setUpdated_at(oldPd.getModifeid_date());
-
-//          products.setTsv(oldPd.get);
-            products.setArticle_id("0");
-            products.setIs_deleted(false);
-            products.setIs_gdb(false);
-            products.setSubcategory_id(0);
-            products.setIs_active(true);
-
-            Long oldProductId = oldPd.getProductId();
-
-            MysqlProductStores mysqlProductStores = mysqlProductStoresRepository.findByProductId(oldProductId);
-
-            if(null != mysqlProductStores) {
-
-                if(null != mysqlProductStores.getPRODUCTUNIT())
-                    products.setUnit(mysqlProductStores.getPRODUCTUNIT());
-
-                if(null != mysqlProductStores.getStore_mrp_price())
-                    products.setMrp(mysqlProductStores.getStore_mrp_price());
-
-                if(null != mysqlProductStores.getPrice())
-                    products.setSell_price(mysqlProductStores.getPrice());
-
-
-
-                Here We are generating new storeId's while creating stores,
-     * and storing the old storeId's in the MappingStoreId table.
-     *
-     * Hence we are sending old StoreId's from the mysqlProductStores to
-     * get new generated storeId and saving in the Products table
-     *
-
-                MappingStoreId mappingStoreId = mappingStoreIdRepository.findByOldStoreId(mysqlProductStores.getStoreId());
-                products.setStoreid(mappingStoreId.getNewStoreId());
-                productsList.add(products);
-            }
-
-            if (true){
-                productsRepository.saveAll(productsList);
-                productsList.clear();
-            }
-            entityManager.detach(oldPd);
-        });
-
-        return true;
-    }
-
-
-    */
 }

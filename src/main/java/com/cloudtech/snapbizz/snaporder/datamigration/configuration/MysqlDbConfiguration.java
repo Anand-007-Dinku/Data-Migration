@@ -52,7 +52,7 @@ public class MysqlDbConfiguration {
     public LocalContainerEntityManagerFactoryBean db1EntityManagerFactory(EntityManagerFactoryBuilder builder,
                                                                           @Qualifier("mysqlDatSource") DataSource dataSource) {
         HashMap<String, Object> properties = new HashMap<>();
-        properties.put("hibernate.hbm2ddl.auto", "update");
+        properties.put("hibernate.hbm2ddl.auto", "none");
         properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 
         return builder.dataSource(dataSource).properties(properties)

@@ -15,19 +15,19 @@ public class SBSOStoreMap {
     private Integer id;
 
     @Column(name = "store_name")
-    private String store_name;
+    private String storeName;
 
     @Column(name = "so_storeid")
-    private Long sostoreid;
+    private Long sostoreId;
 
     @Column(name = "sb_storeid")
-    private Integer sb_storeid;
+    private Integer sbStoreid;
 
     @Column(name = "metro_dcid")
-    private Integer metro_dcid;
+    private Integer metroDcId;
 
     @Column(name = "is_active_sync")
-    private Boolean is_active_sync;
+    private Boolean isActiveSync;
 
     public SBSOStoreMap() {
     }
@@ -40,43 +40,55 @@ public class SBSOStoreMap {
         this.id = id;
     }
 
-    public String getStore_name() {
-        return store_name;
+    public String getStoreName() {
+        return storeName;
     }
 
-    public void setStore_name(String store_name) {
-        this.store_name = store_name;
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 
-    public Long getSo_storeid() {
-        return sostoreid;
+    public Long getSostoreId() {
+        return sostoreId;
     }
 
-    public void setSo_storeid(Long sostoreid) {
-        this.sostoreid = sostoreid;
+    public void setSostoreId(Long sostoreId) {
+        this.sostoreId = sostoreId;
     }
 
-    public Integer getSb_storeid() {
-        return sb_storeid;
+    public Integer getSbStoreid() {
+        return sbStoreid;
     }
 
-    public void setSb_storeid(Integer sb_storeid) {
-        this.sb_storeid = sb_storeid;
+    public void setSbStoreid(Integer sbStoreid) {
+        this.sbStoreid = sbStoreid;
     }
 
-    public Integer getMetro_dcid() {
-        return metro_dcid;
+    public Integer getMetroDcId() {
+        return metroDcId;
     }
 
-    public void setMetro_dcid(Integer metro_dcid) {
-        this.metro_dcid = metro_dcid;
+    public void setMetroDcId(Integer metroDcId) {
+        this.metroDcId = metroDcId;
     }
 
-    public Boolean getIs_active_sync() {
-        return is_active_sync;
+    public Boolean getActiveSync() {
+        return isActiveSync;
     }
 
-    public void setIs_active_sync(Boolean is_active_sync) {
-        this.is_active_sync = is_active_sync;
+    public void setActiveSync(Boolean activeSync) {
+        isActiveSync = activeSync;
     }
 }
+
+
+//MYSQL sb_so_store_map table DDL
+/*CREATE TABLE `sb_so_store_map` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `store_name` varchar(150) DEFAULT NULL,
+  `so_storeId` bigint(20) DEFAULT NULL,
+  `sb_storeId` int(11) DEFAULT NULL,
+  `metro_dcId` int(3) DEFAULT '0',
+  `is_active_sync` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=293 DEFAULT CHARSET=utf8*/

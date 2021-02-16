@@ -2,6 +2,7 @@ package com.cloudtech.snapbizz.snaporder.datamigration.mysql.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * @author Anand SN
@@ -15,7 +16,7 @@ public class MysqlProductStores {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    private Integer id;
+    private Integer productsStoreId;
 
     @Column(name = "PRODUCTID")
     private Long productId;
@@ -24,7 +25,7 @@ public class MysqlProductStores {
     private Long storeId;
 
     @Column(name = "PRODUCTUNIT")
-    private String PRODUCTUNIT;
+    private String productUnit;
 
     @Column(name = "price")
     private Double price;
@@ -33,32 +34,74 @@ public class MysqlProductStores {
     private java.sql.Date expiry;
 
     @Column(name = "MANUFACTURE")
-    private String MANUFACTURE;
+    private String manufacture;
 
     @Column(name = "DISTRIBUTOR")
-    private String DISTRIBUTOR;
+    private String distributor;
+
+    @Column(name = "SALESTARTDATE")
+    private Timestamp saleStartDate;
+
+    @Column(name = "SALEENDDATE")
+    private Timestamp saleEndDate;
+
+    @Column(name = "ONSALE")
+    private Boolean onSale;
 
     @Column(name = "AVAILABLEQUANTITY")
-    private Long AVAILABLEQUANTITY;
+    private Long availableQuantity;
 
     @Column(name = "SALEPRICE")
-    private Double SALEPRICE;
+    private Double salePrice;
+
+    @Column(name = "SALEBUY")
+    private Double saleBuy;
+
+    @Column(name = "SALEGET")
+    private Double saleGet;
+
+    @Column(name = "DELETEFLAG")
+    private Integer deleteFlag;
+
+    @Column(name = "BARCODE")
+    private String barcode;
+
+    @Column(name = "modifeid_date")
+    private Timestamp modifeidDate;
+
+    @Column(name = "created_date")
+    private Timestamp createdDate;
+
+    @Column(name = "createby")
+    private Integer createBy;
+
+    @Column(name = "reason")
+    private String reason;
+
+    @Column(name = "modifiedby")
+    private Integer modifiedBy;
 
     @Column(name = "product_unit_id")
-    private Long product_unit_id;
+    private Long productUnitId;
 
     @Column(name = "store_mrp_price")
-    private Double store_mrp_price;
+    private Double storeMrpPrice;
 
     @Column(name = "offer_description")
-    private String offer_description;
+    private String offerDescription;
 
-    public Integer getId() {
-        return id;
+    @Column(name = "offer_flag")
+    private String offerFlag;
+
+    public MysqlProductStores() {
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getProductsStoreId() {
+        return productsStoreId;
+    }
+
+    public void setProductsStoreId(Integer productsStoreId) {
+        this.productsStoreId = productsStoreId;
     }
 
     public Long getProductId() {
@@ -77,12 +120,12 @@ public class MysqlProductStores {
         this.storeId = storeId;
     }
 
-    public String getPRODUCTUNIT() {
-        return PRODUCTUNIT;
+    public String getProductUnit() {
+        return productUnit;
     }
 
-    public void setPRODUCTUNIT(String PRODUCTUNIT) {
-        this.PRODUCTUNIT = PRODUCTUNIT;
+    public void setProductUnit(String productUnit) {
+        this.productUnit = productUnit;
     }
 
     public Double getPrice() {
@@ -101,105 +144,199 @@ public class MysqlProductStores {
         this.expiry = expiry;
     }
 
-    public String getMANUFACTURE() {
-        return MANUFACTURE;
+    public String getManufacture() {
+        return manufacture;
     }
 
-    public void setMANUFACTURE(String MANUFACTURE) {
-        this.MANUFACTURE = MANUFACTURE;
+    public void setManufacture(String manufacture) {
+        this.manufacture = manufacture;
     }
 
-    public String getDISTRIBUTOR() {
-        return DISTRIBUTOR;
+    public String getDistributor() {
+        return distributor;
     }
 
-    public void setDISTRIBUTOR(String DISTRIBUTOR) {
-        this.DISTRIBUTOR = DISTRIBUTOR;
+    public void setDistributor(String distributor) {
+        this.distributor = distributor;
     }
 
-    public Long getAVAILABLEQUANTITY() {
-        return AVAILABLEQUANTITY;
+    public Timestamp getSaleStartDate() {
+        return saleStartDate;
     }
 
-    public void setAVAILABLEQUANTITY(Long AVAILABLEQUANTITY) {
-        this.AVAILABLEQUANTITY = AVAILABLEQUANTITY;
+    public void setSaleStartDate(Timestamp saleStartDate) {
+        this.saleStartDate = saleStartDate;
     }
 
-    public Double getSALEPRICE() {
-        return SALEPRICE;
+    public Timestamp getSaleEndDate() {
+        return saleEndDate;
     }
 
-    public void setSALEPRICE(Double SALEPRICE) {
-        this.SALEPRICE = SALEPRICE;
+    public void setSaleEndDate(Timestamp saleEndDate) {
+        this.saleEndDate = saleEndDate;
     }
 
-    public Long getProduct_unit_id() {
-        return product_unit_id;
+    public Boolean getOnSale() {
+        return onSale;
     }
 
-    public void setProduct_unit_id(Long product_unit_id) {
-        this.product_unit_id = product_unit_id;
+    public void setOnSale(Boolean onSale) {
+        this.onSale = onSale;
     }
 
-    public Double getStore_mrp_price() {
-        return store_mrp_price;
+    public Long getAvailableQuantity() {
+        return availableQuantity;
     }
 
-    public void setStore_mrp_price(Double store_mrp_price) {
-        this.store_mrp_price = store_mrp_price;
+    public void setAvailableQuantity(Long availableQuantity) {
+        this.availableQuantity = availableQuantity;
     }
 
-    public String getOffer_description() {
-        return offer_description;
+    public Double getSalePrice() {
+        return salePrice;
     }
 
-    public void setOffer_description(String offer_description) {
-        this.offer_description = offer_description;
+    public void setSalePrice(Double salePrice) {
+        this.salePrice = salePrice;
+    }
+
+    public Double getSaleBuy() {
+        return saleBuy;
+    }
+
+    public void setSaleBuy(Double saleBuy) {
+        this.saleBuy = saleBuy;
+    }
+
+    public Double getSaleGet() {
+        return saleGet;
+    }
+
+    public void setSaleGet(Double saleGet) {
+        this.saleGet = saleGet;
+    }
+
+    public Integer getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(Integer deleteFlag) {
+        this.deleteFlag = deleteFlag;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
+    }
+
+    public Timestamp getModifeidDate() {
+        return modifeidDate;
+    }
+
+    public void setModifeidDate(Timestamp modifeidDate) {
+        this.modifeidDate = modifeidDate;
+    }
+
+    public Timestamp getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Integer getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public Integer getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(Integer modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
+    public Long getProductUnitId() {
+        return productUnitId;
+    }
+
+    public void setProductUnitId(Long productUnitId) {
+        this.productUnitId = productUnitId;
+    }
+
+    public Double getStoreMrpPrice() {
+        return storeMrpPrice;
+    }
+
+    public void setStoreMrpPrice(Double storeMrpPrice) {
+        this.storeMrpPrice = storeMrpPrice;
+    }
+
+    public String getOfferDescription() {
+        return offerDescription;
+    }
+
+    public void setOfferDescription(String offerDescription) {
+        this.offerDescription = offerDescription;
+    }
+
+    public String getOfferFlag() {
+        return offerFlag;
+    }
+
+    public void setOfferFlag(String offerFlag) {
+        this.offerFlag = offerFlag;
     }
 }
 
+//MYSQL productstores Table DDL
 
-/*
-    @Column(name = "SALESTARTDATE")
-    private Timestamp SALESTARTDATE;
-
-    @Column(name = "SALEENDDATE")
-    private Timestamp SALEENDDATE;
-
-    @Column(name = "ONSALE")
-    private Boolean ONSALE;
-
-    @Column(name = "SALEBUY")
-    private Double SALEBUY;
-
-    @Column(name = "SALEGET")
-    private Double SALEGET;
-
-    @Column(name = "DELETEFLAG")
-    private Integer DELETEFLAG;
-
-    @Column(name = "BARCODE")
-    private String BARCODE;
-
-    @Column(name = "modifeid_date")
-    private Timestamp modifeid_date;
-
-    @Column(name = "created_date")
-    private Timestamp created_date;
-
-    @Column(name = "createby")
-    private Integer createby;
-
-    @Column(name = "reason")
-    private String reason;
-
-    @Column(name = "modifiedby")
-    private Integer modifiedby;
-
-    @Column(name = "offer_description")
-    private String offer_description;
-
-    @Column(name = "offer_flag")
-    private String offer_flag;
-
-    */
+/*CREATE TABLE `productstores` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `PRODUCTID` bigint(1) NOT NULL,
+  `STOREID` bigint(20) NOT NULL,
+  `PRODUCTUNIT` varchar(30) NOT NULL,
+  `price` double DEFAULT NULL,
+  `expiry` date DEFAULT NULL,
+  `MANUFACTURE` varchar(500) DEFAULT NULL,
+  `DISTRIBUTOR` varchar(500) DEFAULT NULL,
+  `SALESTARTDATE` datetime DEFAULT NULL,
+  `SALEENDDATE` datetime DEFAULT NULL,
+  `ONSALE` varchar(1) DEFAULT NULL,
+  `AVAILABLEQUANTITY` bigint(20) DEFAULT NULL,
+  `SALEPRICE` double DEFAULT NULL,
+  `SALEBUY` double DEFAULT NULL,
+  `SALEGET` double DEFAULT NULL,
+  `DELETEFLAG` int(11) DEFAULT NULL,
+  `BARCODE` varchar(250) DEFAULT NULL,
+  `modifeid_date` timestamp NULL DEFAULT NULL,
+  `created_date` timestamp NULL DEFAULT NULL,
+  `createby` int(11) DEFAULT NULL,
+  `reason` varchar(500) DEFAULT NULL,
+  `modifiedby` int(11) DEFAULT NULL,
+  `product_unit_id` bigint(20) DEFAULT NULL,
+  `store_mrp_price` double NOT NULL,
+  `offer_description` varchar(1000) DEFAULT NULL,
+  `offer_flag` varchar(11) DEFAULT 'No',
+  PRIMARY KEY (`id`),
+  KEY `fk_product` (`PRODUCTID`),
+  KEY `store_fk` (`STOREID`),
+  KEY `fk_product_unit_id` (`product_unit_id`),
+  KEY `BARCODE` (`BARCODE`)
+) ENGINE=InnoDB AUTO_INCREMENT=257258 DEFAULT CHARSET=utf8*/
