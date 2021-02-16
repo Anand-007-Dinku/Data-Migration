@@ -31,13 +31,13 @@ public class StoreMapServiceImpl implements StoreMapService {
     @Override
     public SBSOStoreMap getBySostoreid(Long id) {
 
-        SBSOStoreMap storeMap = storeMapRepository.findBySostoreid(id).orElseGet(() -> {
+        SBSOStoreMap storeMap = storeMapRepository.findBySostoreId(id).orElseGet(() -> {
             SBSOStoreMap map = new SBSOStoreMap();
-            map.setIs_active_sync(true);
-            map.setMetro_dcid(0);
-            map.setSb_storeid(0);
-            map.setStore_name("abc");
-            map.setSo_storeid(id);
+            map.setActiveSync(true);
+            map.setMetroDcId(0);
+            map.setSbStoreid(0);
+            map.setStoreName("abc");
+            map.setSostoreId(id);
             return map;
         });
         return storeMap;
